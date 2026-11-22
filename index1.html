@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hamada lmobermij</title>
+<style>
+:root{--bg1:#ffe3ec;--bg2:#ffc2d4;--card:#ffffffd9;--text:#6b1a38;--accent:#e63768;--accent2:#c2185b;--soft:#fff;--line:#f3a6bd;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg1:#2a0f1a;--bg2:#4a1a2d;--card:#3a1625d9;--text:#ffd9e5;--accent:#ff5c8a;--accent2:#d6336c;--soft:#2a0f1a;--line:#8a3a55;color-scheme:dark}}
+:root[data-theme="dark"]{--bg1:#2a0f1a;--bg2:#4a1a2d;--card:#3a1625d9;--text:#ffd9e5;--accent:#ff5c8a;--accent2:#d6336c;--soft:#2a0f1a;--line:#8a3a55;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:linear-gradient(160deg,var(--bg1),var(--bg2));color:var(--text);font-family:"Segoe UI",Tahoma,"Noto Naskh Arabic",Arial,sans-serif;overflow:hidden;position:relative}
+.hearts{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.h{position:absolute;bottom:-40px;animation:up linear forwards;opacity:.7}
+@keyframes up{to{transform:translateY(-115vh) rotate(25deg);opacity:0}}
+.screen{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;padding:20px 20px 56px;text-align:center;overflow-y:auto}
+.screen.on{display:flex}
+.big{font-size:84px;animation:beat 1.2s infinite;line-height:1}
+@keyframes beat{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+h1{font-size:30px;margin:14px 0 26px}
+.btns{display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;min-height:150px}
+button{font-family:inherit;border:0;border-radius:999px;cursor:pointer;font-size:20px;padding:12px 30px;transition:transform .3s}
+#yes{background:var(--accent);color:#fff;box-shadow:0 6px 18px #e6376855;transform-origin:center}
+#no{background:var(--soft);color:var(--text);border:2px solid var(--line)}
+.card{background:var(--card);backdrop-filter:blur(6px);border-radius:24px;padding:24px 20px;width:100%;max-width:420px;text-align:right;position:relative}
+.card h2{text-align:center;margin:0 0 6px}
+label{display:block;margin:14px 0 6px;font-weight:600}
+.row{display:flex;gap:8px}.row select{flex:1;min-width:0;padding:11px 6px}
+select,input,textarea{width:100%;font-family:inherit;font-size:17px;padding:11px 14px;border-radius:14px;border:2px solid var(--line);background:var(--soft);color:var(--text)}
+textarea{min-height:80px;resize:vertical}
+.save{display:block;margin:20px auto 0;background:var(--accent);color:#fff}
+.sum{display:none;text-align:center}
+.sum p{margin:10px 0;font-size:18px;line-height:1.7}
+.sum .tag{display:inline-block;background:var(--soft);border:2px solid var(--line);border-radius:999px;padding:3px 14px;margin:3px}
+#chromebar{display:none;position:fixed;top:calc(8px + env(safe-area-inset-top,0px));left:10px;right:10px;z-index:20;background:var(--card);backdrop-filter:blur(6px);border:2px solid var(--line);border-radius:18px;padding:10px 14px;text-align:center;font-size:15px}
+#chromebar button{font-size:16px;padding:8px 22px;margin-top:6px;background:var(--accent);color:#fff}
+footer{position:fixed;bottom:calc(8px + env(safe-area-inset-bottom,0px));left:0;right:0;text-align:center;font-size:12px;opacity:.75;z-index:5;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="hearts" id="hearts"></div>
+<div id="chromebar"><div id="cbtxt">للحصول على أفضل تجربة، افتحي الصفحة في المتصفح 🌐</div><button id="cbbtn">افتحي في Chrome</button></div>
+
+<section class="screen on" id="s0">
+  <div class="big">💖</div>
+  <h1 style="font-size:22px;line-height:1.8">إذا كنتِ تعلمين أنكِ مفضّلة لديّ، اضغطي على <span id="go" role="button" tabindex="0" style="color:var(--accent);font-weight:700;text-decoration:underline;cursor:pointer">let’s go</span> 💗</h1>
+</section>
+
+<section class="screen" id="s1">
+  <div class="big">💖</div>
+  <h1>هل تحبينني؟</h1>
+  <div class="btns">
+    <button id="yes">نعم</button>
+    <button id="no">لا</button>
+  </div>
+</section>
+
+<section class="screen" id="s2">
+  <div class="card">
+    <div id="form">
+      <h2>💕 عرّفيني عليكِ 💕</h2>
+      <label>متى وُلدتِ؟</label>
+      <div class="row"><select id="bdd"></select><select id="bdm"></select><select id="bdy"></select></div>
+      <label for="color">لونكِ المفضل</label>
+      <input type="text" id="color">
+      <label for="food">أكلتكِ المفضلة</label>
+      <input type="text" id="food">
+      <label for="more">أشياء أخرى تحبينها</label>
+      <textarea id="more"></textarea>
+      <button class="save" id="save">حفظ 💌</button>
+    </div>
+    <div class="sum" id="sum">
+      <div class="big" style="font-size:60px">🥰</div>
+      <h2>شكراً لكِ!</h2>
+      <p id="o1"></p><p id="o2"></p><p id="o3"></p><p id="o4"></p>
+      <p id="st" style="font-size:15px"></p>
+      <button class="save" id="share" style="display:none">إرسالها لأحمد 📤</button>
+    </div>
+  </div>
+</section>
+
+<footer>صديقكِ Hamada lmobermij 💗</footer>
+
+<script>
+(function(){
+  var heartsBox=document.getElementById('hearts');
+  var chars=['❤','💗','💖','💕','♥'];
+  function spawn(){
+    var e=document.createElement('span');
+    e.className='h';
+    e.textContent=chars[Math.floor(Math.random()*chars.length)];
+    e.style.left=Math.random()*100+'%';
+    e.style.fontSize=(14+Math.random()*26)+'px';
+    var d=5+Math.random()*5;
+    e.style.animationDuration=d+'s';
+    heartsBox.appendChild(e);
+    setTimeout(function(){e.remove()},d*1000);
+  }
+  setInterval(spawn,350);
+  for(var i=0;i<8;i++)setTimeout(spawn,i*120);
+
+  (function(){
+    var ua=navigator.userAgent||'';
+    var inApp=/Instagram|FBAN|FBAV|FB_IAB|Snapchat|Line\/|; wv\)/i.test(ua);
+    if(!inApp)return;
+    var android=/Android/i.test(ua);
+    var bar=document.getElementById('chromebar'),btn=document.getElementById('cbbtn'),txt=document.getElementById('cbtxt');
+    bar.style.display='block';
+    var url=location.href;
+    if(android){
+      btn.addEventListener('click',function(){
+        var u=new URL(url);var intent='intent://'+u.host+u.pathname+u.search+u.hash+'#Intent;scheme='+u.protocol.replace(':','')+';package=com.android.chrome;S.browser_fallback_url='+encodeURIComponent(url)+';end';
+        try{(window.top||window).location.href=intent}catch(e){window.location.href=intent}
+      });
+    }else{
+      txt.textContent='اضغطي على النقاط الثلاث أو أيقونة المتصفح، ثم اختاري «فتح في المتصفح» 🌐';
+      btn.textContent='نسخ الرابط';
+      btn.addEventListener('click',function(){
+        if(navigator.clipboard){navigator.clipboard.writeText(url).then(function(){btn.textContent='تم النسخ ✅'}).catch(function(){})}
+      });
+    }
+  })();
+
+  function enter(){document.getElementById('s0').classList.remove('on');document.getElementById('s1').classList.add('on')}
+  var go=document.getElementById('go');
+  go.addEventListener('click',enter);
+  go.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' ')enter()});
+  var yes=document.getElementById('yes'),no=document.getElementById('no');
+  var step=0,scale=1;
+  var labels=['لا','هل أنتِ واثقة؟ 🥺','متأكدة مئة بالمئة؟','حقاً؟ حتى لو قلبي سيحزن؟ 💔','فكّري مرة ثانية 🥹','أنتِ تمزحين، صح؟','ألن تغيّري رأيك؟','أرجوكِ، فكّري قليلاً 🙏','قلبي يتوسّل إليكِ 💘','هل هذا جوابكِ الأخير؟'];
+  no.addEventListener('click',function(){
+    step++;
+    scale=Math.min(scale+0.3,4);
+    yes.style.transform='scale('+scale+')';
+    no.textContent=labels[Math.min(step,labels.length-1)];
+    no.style.marginInlineStart=(scale*14)+'px';
+  });
+  yes.addEventListener('click',function(){
+    document.getElementById('s1').classList.remove('on');
+    document.getElementById('s2').classList.add('on');
+    for(var i=0;i<25;i++)setTimeout(spawn,i*60);
+  });
+
+  function fmt(v){
+    if(!v)return '';
+    try{return new Date(v+'T00:00:00').toLocaleDateString('ar',{year:'numeric',month:'long',day:'numeric'})}catch(e){return v}
+  }
+  (function(){
+    var months=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+    function fill(id,ph,items){var s=document.getElementById(id);var o=document.createElement('option');o.value='';o.textContent=ph;s.appendChild(o);items.forEach(function(it){var x=document.createElement('option');x.value=it[0];x.textContent=it[1];s.appendChild(x)})}
+    var days=[],ms=[],ys=[],i;
+    for(i=1;i<=31;i++)days.push([i,String(i)]);
+    for(i=1;i<=12;i++)ms.push([i,months[i-1]]);
+    for(i=new Date().getFullYear();i>=1950;i--)ys.push([i,String(i)]);
+    fill('bdd','اليوم',days);fill('bdm','الشهر',ms);fill('bdy','السنة',ys);
+  })();
+  document.getElementById('save').addEventListener('click',function(){
+    var dd=document.getElementById('bdd').value,mm=document.getElementById('bdm').value,yy=document.getElementById('bdy').value;
+    var bd=(dd&&mm&&yy)?(yy+'-'+('0'+mm).slice(-2)+'-'+('0'+dd).slice(-2)):'',
+        c=document.getElementById('color').value.trim(),
+        f=document.getElementById('food').value.trim(),
+        m=document.getElementById('more').value.trim();
+    function set(id,t){var el=document.getElementById(id);el.textContent=t;el.style.display=t?'block':'none'}
+    set('o1',bd?'🎂 وُلدتِ في: '+fmt(bd):'');
+    set('o2',c?'🎨 لونكِ المفضل: '+c:'');
+    set('o3',f?'🍽️ أكلتكِ المفضلة: '+f:'');
+    set('o4',m?'✨ تحبين أيضاً: '+m:'');
+    document.getElementById('form').style.display='none';
+    document.getElementById('sum').style.display='block';
+    for(var i=0;i<25;i++)setTimeout(spawn,i*60);
+    var text='💌 إجاباتها:\n'+(bd?'تاريخ الميلاد: '+fmt(bd)+'\n':'')+(c?'اللون المفضل: '+c+'\n':'')+(f?'الأكلة المفضلة: '+f+'\n':'')+(m?'تحب أيضاً: '+m:'');
+    var payload={birthday:bd,color:c,food:f,more:m,at:new Date().toISOString()};
+    var st=document.getElementById('st'),sh=document.getElementById('share');
+    function fallback(){
+      st.textContent='اضغطي الزر لإرسالها لأحمد 💌';sh.style.display='block';
+      sh.onclick=function(){
+        if(navigator.share){navigator.share({text:text}).catch(function(){})}
+        else if(navigator.clipboard){navigator.clipboard.writeText(text).then(function(){st.textContent='تم النسخ، الصقيها في رسالة لأحمد 💌'}).catch(function(){})}
+      };
+    }
+    (async function(){
+      try{
+        var db=window.claude&&await window.claude.use('db');
+        if(!db){fallback();return}
+        await db.doc('answers/'+Date.now()).set(payload);
+        st.textContent='تم إرسالها لأحمد ✅';
+      }catch(e){fallback()}
+    })();
+  });
+})();
+</script>
+</body>
+</html>
